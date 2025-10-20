@@ -17,8 +17,9 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
         name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: bradcreech617/python-app:${GITHUB_SHA::6}
+          tags: bradcreech617/python-app:${{ github.sha }}
