@@ -5,6 +5,7 @@ metadata:
   description: Python app that displays hot, time, and a message.
   annotations:
     github.com/project-slug: bradcreech/python-app
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: development
