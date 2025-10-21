@@ -29,14 +29,16 @@ jobs:
           push: true
           tags: bradcreech617/python-app:${{ env.COMMIT_ID }}
   cd:
+    needs: ci
     runs-on: self-hosted
     steps:
       -
         name: Argocd app sync
         shell: bash
         run:
-          argocd login argocd.test.com \
-          --insecure \
-          --grpc-web \
-          --username admin \
-          --password ${{ secrets.ARGOCD_PASSWORD }}          
+          argocd login http://argocd-server.argocd \
+            --insecure \
+            --grpc-web \
+            --username admin \
+            --password ${{ secrets.ARGOCD_PASSWORD }}
+          argocd app sync python-app
