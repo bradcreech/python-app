@@ -15,7 +15,7 @@ def info():
     return jsonify({
         "time": get_date_dd_mm_yyyy(),
         "hostname": get_hostname(),
-        "message": 'You are doing a good job human!! :-)',
+        "message": 'You are doing a good job human! :-)',
         "deployed_on": 'kubernetes'
     })
 
