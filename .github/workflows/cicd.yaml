@@ -11,41 +11,38 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Shorten commit id
+      - name: Shorten commit id
         shell: bash
         run:
           echo "COMMIT_ID=${GITHUB_SHA::6}" >> "$GITHUB_ENV"
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: bradcreech617/python-app:${{ env.COMMIT_ID }}
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}  
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
-      -
-        name: Install argocd
+      - name: Modify values file
+        shell: bash
+        run: |
+          echo ${{ needs.ci.outputs.commit_id }}
+      - name: Install argocd
         shell: bash
         run: |
           curl -ksSL -o argocd-linux-amd64 https://argocd-server.argocd/download/argocd-linux-amd64
           chmod +x argocd-linux-amd64
           sudo mv ./argocd-linux-amd64 /usr/local/bin/argocd
-      -
-        name: Argocd app sync
+      - name: Argocd app sync
         shell: bash
         run:
-          argocd login argocd-server.argocd \
-            --insecure \
-            --grpc-web \
-            --username admin \
-            --password ${{ secrets.ARGOCD_PASSWORD }}
+          argocd login argocd-server.argocd --insecure --grpc-web --username admin --password ${{ secrets.ARGOCD_PASSWORD }}
           argocd app sync python-app
