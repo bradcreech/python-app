@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: bradcreech617/python-app
   pullPolicy: IfNotPresent
-  tag: dd8906
+  tag: b9aa76
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
