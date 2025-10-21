@@ -9,13 +9,14 @@ def get_hostname():
 def get_date_dd_mm_yyyy():
     return datetime.now().strftime("%d-%m-%Y")
 
-@app.route('/api/v1/details')
+@app.route('/api/v1/info')
 
-def details():
+def info():
     return jsonify({
         "time": get_date_dd_mm_yyyy(),
         "hostname": get_hostname(),
-        "message": 'You are doing a good job human!! :-)'
+        "message": 'You are doing a good job human!! :-)',
+        "deployed_on": 'kubernetes'
     })
 
 @app.route('/api/v1/healthz')
