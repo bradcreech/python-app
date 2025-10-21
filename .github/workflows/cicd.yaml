@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: Install argocd
+        shell: bash
+        run: |
+          curl -ksSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +777 /usr/local/bin/argocd
+          mv argocd-linux-amd64 /usr/local/bin/argocd
+      
         name: Shorten commit id
         shell: bash
         run:
